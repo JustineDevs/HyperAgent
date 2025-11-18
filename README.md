@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="/docs/public/ascii-art-doh-HyperAgent.png" alt="HyperAgent ASCII Art" width="800">
+  <img src="/public/ascii-art-doh-HyperAgent.png" alt="HyperAgent ASCII Art" width="800">
 </div>
 
 ---
