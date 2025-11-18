@@ -219,3 +219,5 @@ venv/
 env/
 ENV/
 .venv/
+
+REMOTE_SETUP.md
