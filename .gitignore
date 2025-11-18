@@ -220,4 +220,4 @@ env/
 ENV/
 .venv/
 
-REMOTE_SETUP.md
+docs/REMOTE_SETUP.md
