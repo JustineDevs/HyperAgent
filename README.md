@@ -167,7 +167,7 @@ curl http://localhost:8000/api/v1/health/
 # Expected response: {"status": "healthy", ...}
 ```
 
-> 📖 **Need more help?** See the [Getting Started Guide](./GUIDE/GETTING_STARTED.md) for detailed setup instructions.
+> 📖 **Need more help?** See the [Contributing Guide](./CONTRIBUTING.md) for detailed setup instructions.
 
 ---
 
@@ -257,7 +257,7 @@ status = httpx.get(
 print(f"Status: {status['status']}, Progress: {status['progress_percentage']}%")
 ```
 
-> 📚 **More Examples:** See [Usage Examples](./GUIDE/GETTING_STARTED.md#example-workflows) for additional use cases.
+> 📚 **More Examples:** See the [Usage](#-usage) section above for additional use cases.
 
 ---
 
@@ -265,31 +265,23 @@ print(f"Status: {status['status']}, Progress: {status['progress_percentage']}%")
 
 ### Getting Started
 
-- **[Getting Started Guide](./GUIDE/GETTING_STARTED.md)** - Complete setup and first contract generation
-- **[Developer Guide](./GUIDE/DEVELOPER_GUIDE.md)** - Development environment and workflow
-- **[User Guide](./GUIDE/USER_GUIDE.md)** - End-user task-oriented instructions
-- **[API Documentation](./GUIDE/API.md)** - Complete API reference
+- **[Quick Start Guide](./docs/QUICK_START.md)** - Get up and running in minutes
+- **[Configuration Reference](./docs/CONFIGURATION.md)** - Complete configuration options
+- **[Deployment Guide](./docs/DEPLOYMENT.md)** - Production deployment instructions
+- **[Networks Guide](./docs/NETWORKS.md)** - Supported networks and features
 
-### How-To Guides
+### API & Integration
 
-- **[Deployment Guide](./GUIDE/DEPLOYMENT.md)** - Deploy contracts to blockchain
-- **[Docker Setup](./GUIDE/DOCKER.md)** - Run HyperAgent with Docker
-- **[Hyperion PEF Guide](./docs/HYPERION_PEF_GUIDE.md)** - Parallel batch deployment
-- **[MetisVM Optimization](./docs/METISVM_OPTIMIZATION.md)** - MetisVM-specific features
-- **[Troubleshooting](./docs/TROUBLESHOOTING.md)** - Common issues and solutions
-
-### Technical Documentation
-
-- **[Architecture Diagrams](./docs/ARCHITECTURE_DIAGRAMS.md)** - System architecture and patterns
-- **[Complete Technical Specification](./docs/complete-tech-spec.md)** - Full technical details
-- **[Network Compatibility](./docs/NETWORK_COMPATIBILITY.md)** - Supported networks and features
-- **[Testing Setup Guide](./docs/TESTING_SETUP_GUIDE.md)** - Testing configuration and examples
+- **[API Reference](./docs/API_REFERENCE.md)** - Complete REST API documentation
+- **[Troubleshooting Guide](./docs/TROUBLESHOOTING.md)** - Common issues and solutions
 
 ### Contributing
 
-- **[Contributing Guidelines](./CONTRIBUTING.md)** - How to contribute
-- **[Collaborator Guide](./GUIDE/COLLABORATOR_GUIDE.md)** - Contributor workflow
-- **[Code of Conduct](./CODE_OF_CONDUCT.md)** - Community standards
+- **[Contributing Guidelines](./CONTRIBUTING.md)** - How to contribute and development workflow
+- **[Code of Conduct](./CODE_OF_CONDUCT.md)** - Community standards and expectations
+- **[Security Policy](./SECURITY.md)** - Security guidelines and vulnerability reporting
+- **[Changelog](./CHANGELOG.md)** - Version history and release notes
+- **[Branch Workflow](./BRANCH_WORKFLOW.md)** - Git branching strategy and workflow
 
 ---
 
@@ -329,7 +321,7 @@ hyperagent/
 - **LLM**: Google Gemini, OpenAI GPT-4
 - **Security**: Slither, Mythril, Echidna
 
-> 📖 **Detailed Architecture:** See [Architecture Diagrams](./docs/ARCHITECTURE_DIAGRAMS.md) for comprehensive system design.
+> 📖 **Detailed Architecture:** See the [Architecture](#-architecture) section above for system design overview. For comprehensive architecture documentation, refer to the [development branch](https://github.com/JustineDevs/HyperAgent/tree/development).
 
 ---
 
@@ -388,7 +380,7 @@ tests/
 └── load/          # Load testing scripts
 ```
 
-> 📖 **Testing Guide:** See [Testing Setup Guide](./docs/TESTING_SETUP_GUIDE.md) for complete testing documentation.
+> 📖 **Testing Guide:** See the [Testing](#-testing) section above for testing commands. For comprehensive testing documentation, refer to the [development branch](https://github.com/JustineDevs/HyperAgent/tree/development).
 
 ---
 
@@ -400,7 +392,7 @@ We welcome contributions from the community! HyperAgent is an open-source projec
 
 1. **Fork** the repository
 2. **Create a feature branch** (`git checkout -b feature/amazing-feature`)
-3. **Make your changes** following our [Development Workflow](./.cursor/rules/dev-workflow.mdc)
+3. **Make your changes** following our development workflow (see [CONTRIBUTING.md](./CONTRIBUTING.md))
 4. **Write tests** for your changes
 5. **Commit** your changes (`git commit -m 'feat: Add amazing feature'`)
 6. **Push** to your branch (`git push origin feature/amazing-feature`)
@@ -408,7 +400,7 @@ We welcome contributions from the community! HyperAgent is an open-source projec
 
 ### Development Guidelines
 
-- Follow the [Standard Development Workflow](./.cursor/rules/dev-workflow.mdc)
+- Follow the standard development workflow (see [CONTRIBUTING.md](./CONTRIBUTING.md))
 - Write tests before implementation (TDD approach)
 - Follow code style guidelines (PEP 8, type hints, async/await)
 - Update documentation for new features
@@ -418,7 +410,7 @@ We welcome contributions from the community! HyperAgent is an open-source projec
 
 Please note we have a [Code of Conduct](./CODE_OF_CONDUCT.md). By participating, you are expected to uphold this code.
 
-> 📖 **Contributing Guide:** See [CONTRIBUTING.md](./CONTRIBUTING.md) and [Collaborator Guide](./GUIDE/COLLABORATOR_GUIDE.md) for detailed contribution guidelines.
+> 📖 **Contributing Guide:** See [CONTRIBUTING.md](./CONTRIBUTING.md) for detailed contribution guidelines.
 
 ---
 
@@ -429,7 +421,7 @@ Please note we have a [Code of Conduct](./CODE_OF_CONDUCT.md). By participating,
 - 📖 **Documentation** - Check our [documentation](#-documentation) section
 - 🐛 **Bug Reports** - Open an issue on [GitHub Issues](https://github.com/JustineDevs/HyperAgent/issues)
 - 💡 **Feature Requests** - Submit via [GitHub Issues](https://github.com/JustineDevs/HyperAgent/issues)
-- ❓ **Questions** - Check [Troubleshooting Guide](./docs/TROUBLESHOOTING.md)
+- ❓ **Questions** - Check [GitHub Issues](https://github.com/JustineDevs/HyperAgent/issues) or refer to the [development branch](https://github.com/JustineDevs/HyperAgent/tree/development) for troubleshooting guides
 
 ### Community
 
