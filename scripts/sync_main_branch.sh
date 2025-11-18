@@ -25,10 +25,10 @@ git checkout development 2>/dev/null || {
     git checkout -b development
 }
 
-# Pull latest changes (if remote exists)
-if git remote | grep -q origin; then
-    echo "[*] Pulling latest changes from origin/development..."
-    git pull origin development 2>/dev/null || echo "[!] No remote changes or remote not configured"
+# Pull latest changes from development remote
+if git remote | grep -q origin-dev; then
+    echo "[*] Pulling latest changes from origin-dev/development..."
+    git pull origin-dev development 2>/dev/null || echo "[!] No remote changes or remote not configured"
 fi
 
 # Create or switch to main branch
@@ -105,6 +105,7 @@ echo "[*] Current branch: $(git branch --show-current)"
 echo ""
 echo "[*] Next steps:"
 echo "    1. Review changes: git log --oneline -5"
-echo "    2. Push to remote: git push origin main"
-echo "    3. Switch back to development: git checkout development"
+echo "    2. Push to production remote: git push origin-prod main"
+echo "    3. Push tags (if any): git push origin-prod --tags"
+echo "    4. Switch back to development: git checkout development"
 
