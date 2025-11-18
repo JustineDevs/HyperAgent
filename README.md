@@ -1,18 +1,5 @@
 <div align="center">
-
-**AI-Powered Smart Contract Development Platform**
-
-[![Version](https://img.shields.io/badge/version-1.0.0-brightgreen)](https://github.com/JustineDevs/HyperAgent/releases)
-[![License](https://img.shields.io/badge/license-MIT-blue)](./LICENSE)
-[![Python](https://img.shields.io/badge/python-3.10%2B-blue)](https://www.python.org/downloads/)
-[![Status](https://img.shields.io/badge/status-production%20ready-success)](https://github.com/JustineDevs/HyperAgent)
-[![Contributors](https://img.shields.io/github/contributors/JustineDevs/HyperAgent)](https://github.com/JustineDevs/HyperAgent/graphs/contributors)
-[![Issues](https://img.shields.io/github/issues/JustineDevs/HyperAgent)](https://github.com/JustineDevs/HyperAgent/issues)
-
-<img src="/public/ascii-art-doh-HyperAgent.png" alt="HyperAgent ASCII Art" width="800">
-
-[Features](#-features) • [Quick Start](#-quick-start) • [Documentation](#-documentation) • [Contributing](#-contributing) • [Support](#-support)
-
+  <img src="/docs/public/ascii-art-doh-HyperAgent.png" alt="HyperAgent ASCII Art" width="800">
 </div>
 
 ---
