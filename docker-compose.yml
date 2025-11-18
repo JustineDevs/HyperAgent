@@ -1,0 +1,153 @@
+# docker-compose.yml - Development Stack
+# Note: version field is obsolete in Docker Compose v2+
+
+services:
+  # ============================================================================
+  # MAIN APPLICATION
+  # ============================================================================
+  
+  hyperagent:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - BUILDKIT_INLINE_CACHE=1
+    container_name: hyperagent_app
+    ports:
+      - "${API_PORT:-8000}:8000"
+    environment:
+      # Application
+      - NODE_ENV=${NODE_ENV:-development}
+      - LOG_LEVEL=${LOG_LEVEL:-INFO}
+      - DEBUG=${DEBUG:-false}
+      
+      # Database
+      - DATABASE_URL=${DATABASE_URL:-postgresql://hyperagent_user:secure_password@postgres:5432/hyperagent_db}
+      - SUPABASE_URL=${SUPABASE_URL:-}
+      - SUPABASE_ANON_KEY=${SUPABASE_ANON_KEY:-}
+      
+      # Redis
+      - REDIS_URL=${REDIS_URL:-redis://redis:6379/0}
+      - REDIS_PASSWORD=${REDIS_PASSWORD:-}
+      
+      # LLM Providers
+      - GEMINI_API_KEY=${GEMINI_API_KEY:-}
+      - OPENAI_API_KEY=${OPENAI_API_KEY:-}
+      
+      # IPFS/Pinata
+      - PINATA_JWT=${PINATA_JWT:-}
+      
+      # Blockchain Networks
+      - HYPERION_TESTNET_RPC=${HYPERION_TESTNET_RPC:-https://hyperion-testnet.metisdevops.link}
+      - HYPERION_TESTNET_CHAIN_ID=${HYPERION_TESTNET_CHAIN_ID:-133717}
+      - MANTLE_TESTNET_RPC=${MANTLE_TESTNET_RPC:-https://rpc.sepolia.mantle.xyz}
+      - MANTLE_TESTNET_CHAIN_ID=${MANTLE_TESTNET_CHAIN_ID:-5003}
+      
+      # Security & Wallet
+      - PRIVATE_KEY=${PRIVATE_KEY:-}
+      - PUBLIC_ADDRESS=${PUBLIC_ADDRESS:-}
+      
+      # API Configuration
+      - API_HOST=0.0.0.0
+      - API_PORT=8000
+      - API_WORKERS=${API_WORKERS:-4}
+      - CORS_ORIGINS=${CORS_ORIGINS:-*}
+      
+      # Feature Flags
+      - ENABLE_WEBSOCKET=${ENABLE_WEBSOCKET:-true}
+      - ENABLE_RATE_LIMITING=${ENABLE_RATE_LIMITING:-false}
+      - ENABLE_AUTHENTICATION=${ENABLE_AUTHENTICATION:-false}
+      - ENABLE_METRICS=${ENABLE_METRICS:-true}
+      
+      # JWT
+      - JWT_SECRET_KEY=${JWT_SECRET_KEY:-change-me-in-production}
+      - JWT_ALGORITHM=${JWT_ALGORITHM:-HS256}
+      - JWT_EXPIRE_MINUTES=${JWT_EXPIRE_MINUTES:-1440}
+      
+      # Workflow Settings
+      - MAX_RETRIES=${MAX_RETRIES:-3}
+      - RETRY_BACKOFF_BASE=${RETRY_BACKOFF_BASE:-2}
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    volumes:
+      # Development: mount source code for hot reload
+      - ./hyperagent:/app/hyperagent:ro
+      - ./logs:/app/logs
+      - ./alembic:/app/alembic:ro
+    networks:
+      - hyperagent_network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/api/v1/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+  
+  # ============================================================================
+  # DATABASE (POSTGRESQL)
+  # ============================================================================
+  
+  postgres:
+    image: pgvector/pgvector:pg15
+    container_name: hyperagent_postgres
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-hyperagent_db}
+      POSTGRES_USER: ${POSTGRES_USER:-hyperagent_user}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-secure_password}
+      POSTGRES_INITDB_ARGS: "--encoding=UTF8 --locale=C"
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      # Initialize pgvector extension
+      - ./scripts/init_pgvector.sql:/docker-entrypoint-initdb.d/init_pgvector.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-hyperagent_user} -d ${POSTGRES_DB:-hyperagent_db}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    networks:
+      - hyperagent_network
+    restart: unless-stopped
+  
+  # ============================================================================
+  # CACHE (REDIS)
+  # ============================================================================
+  
+  redis:
+    image: redis:7-alpine
+    container_name: hyperagent_redis
+    ports:
+      - "${REDIS_PORT:-6379}:6379"
+    command: >
+      redis-server
+      --appendonly yes
+      --appendfsync everysec
+      --maxmemory 256mb
+      --maxmemory-policy allkeys-lru
+      ${REDIS_PASSWORD:+--requirepass $REDIS_PASSWORD}
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 5s
+    networks:
+      - hyperagent_network
+    restart: unless-stopped
+
+networks:
+  hyperagent_network:
+    driver: bridge
+
+volumes:
+  postgres_data:
+  redis_data:
+
