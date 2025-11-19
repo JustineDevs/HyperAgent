@@ -143,6 +143,56 @@ services:
       - hyperagent_network
     restart: unless-stopped
 
+  # ============================================================================
+  # MONITORING (PROMETHEUS)
+  # ============================================================================
+  
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: hyperagent_prometheus
+    ports:
+      - "${PROMETHEUS_PORT:-9090}:9090"
+    volumes:
+      - ./config/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus_data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--storage.tsdb.retention.time=30d'
+      - '--web.console.libraries=/usr/share/prometheus/console_libraries'
+      - '--web.console.templates=/usr/share/prometheus/consoles'
+    networks:
+      - hyperagent_network
+    depends_on:
+      hyperagent:
+        condition: service_healthy
+    restart: unless-stopped
+
+  # ============================================================================
+  # MONITORING (GRAFANA)
+  # ============================================================================
+  
+  grafana:
+    image: grafana/grafana:latest
+    container_name: hyperagent_grafana
+    ports:
+      - "${GRAFANA_PORT:-3001}:3000"
+    environment:
+      - GF_SECURITY_ADMIN_USER=${GRAFANA_ADMIN_USER:-admin}
+      - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_ADMIN_PASSWORD:-admin}
+      - GF_USERS_ALLOW_SIGN_UP=false
+      - GF_SERVER_ROOT_URL=http://localhost:3001
+      - GF_INSTALL_PLUGINS=
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./config/grafana/provisioning:/etc/grafana/provisioning:ro
+      - ./config/grafana/dashboards:/var/lib/grafana/dashboards:ro
+    networks:
+      - hyperagent_network
+    depends_on:
+      - prometheus
+    restart: unless-stopped
+
 networks:
   hyperagent_network:
     driver: bridge
@@ -150,4 +200,6 @@ networks:
 volumes:
   postgres_data:
   redis_data:
+  prometheus_data:
+  grafana_data:
 
