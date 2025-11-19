@@ -88,7 +88,7 @@ class Settings(BaseSettings):
     api_host: str = "0.0.0.0"
     api_port: int = 8000
     api_workers: int = 4
-    cors_origins: str = "*"
+    cors_origins: str = "*"  # Can be overridden with comma-separated list: "http://localhost:3000,http://localhost:3001"
     
     # Monitoring & Observability
     enable_metrics: Union[bool, str] = True
