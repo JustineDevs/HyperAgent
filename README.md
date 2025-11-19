@@ -159,6 +159,52 @@ HyperAgent is an AI-powered platform that streamlines smart contract development
 
 For detailed setup instructions, see [Getting Started Guide](./GUIDE/GETTING_STARTED.md).
 
+### Frontend (Optional)
+
+HyperAgent includes a Next.js web frontend for non-developers:
+
+1. **Navigate to frontend directory**
+   ```bash
+   cd frontend
+   ```
+
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
+
+3. **Start development server**
+   ```bash
+   npm run dev
+   ```
+
+4. **Access the frontend**
+   - Open [http://localhost:3000](http://localhost:3000) in your browser
+   - Create workflows, view contracts, and monitor deployments through the web interface
+
+See [Frontend README](./frontend/README.md) for detailed frontend documentation.
+
+### Monitoring with Grafana
+
+HyperAgent includes Grafana and Prometheus for system monitoring:
+
+1. **Start monitoring services** (included in docker-compose)
+   ```bash
+   docker-compose up -d prometheus grafana
+   ```
+
+2. **Access Grafana**
+   - URL: [http://localhost:3001](http://localhost:3001)
+   - Default credentials: `admin` / `admin`
+   - Pre-configured dashboards:
+     - System Health Dashboard
+     - Workflow Metrics Dashboard
+     - Agent Performance Dashboard
+
+3. **Access Prometheus**
+   - URL: [http://localhost:9090](http://localhost:9090)
+   - Metrics endpoint: `http://localhost:8000/api/v1/metrics/prometheus`
+
 ## Usage
 
 ### Basic Workflow: Generate and Deploy Contract
@@ -245,6 +291,11 @@ See [Usage Examples](./GUIDE/GETTING_STARTED.md#example-workflows) for more exam
 - **[Complete Technical Specification](./docs/complete-tech-spec.md)** - Full technical details
 - **[Network Compatibility](./docs/NETWORK_COMPATIBILITY.md)** - Supported networks and features
 - **[Testing Setup Guide](./docs/TESTING_SETUP_GUIDE.md)** - Testing configuration and examples
+
+### Frontend & Monitoring
+- **[Frontend README](./frontend/README.md)** - Next.js frontend setup and usage
+- **Grafana Dashboards** - Access at `http://localhost:3001` (default: admin/admin)
+- **Prometheus Metrics** - Access at `http://localhost:9090`
 
 ## Architecture
 
